@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">KotlinStudy</string>
+    <string name="service_error">服务器错误</string>
+    <string name="not_found_error">请求资源不存在</string>
+    <string name="timeout_error">请求超时</string>
+    <string name="unknown_error">未知错误</string>
+    <string name="network_error">网路错误</string>
 </resources>
