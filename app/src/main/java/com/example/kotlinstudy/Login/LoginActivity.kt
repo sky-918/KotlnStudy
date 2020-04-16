@@ -1,12 +1,10 @@
-package com.example.kotlinstudy
+package com.example.kotlinstudy.Login
 
-import android.nfc.Tag
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import com.example.kotlinstudy.network.NetworkScheduler
+import com.example.kotlinstudy.R
+import com.example.kotlinstudy.api.WanAndroidApi
 import com.example.kotlinstudy.network.RequstClient
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
@@ -33,7 +31,7 @@ class LoginActivity : RxAppCompatActivity() {
                 Log.i(Tag, "这是登录：userName=$userName     password=$password")
 
                 RequstClient.instance.serviceApi.LoginApi(userName, password)
-                    .compose(NetworkScheduler.compose()).
+
 
             }
             R.id.btn_register -> {

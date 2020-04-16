@@ -15,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RequstClient private constructor() {
     //private constructor 表示这个类是私有的
     lateinit var serviceApi: WanAndroidApi
+    lateinit var retrofit: Retrofit
 
     /**
      * tyy 这是单例模式
@@ -38,7 +39,7 @@ class RequstClient private constructor() {
                 )
             )
         }.build()
-        val retrofit = Retrofit.Builder().apply {
+        retrofit = Retrofit.Builder().apply {
             baseUrl("")
             addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             addConverterFactory(GsonConverterFactory.create())
@@ -47,4 +48,5 @@ class RequstClient private constructor() {
         serviceApi = retrofit.create(WanAndroidApi::class.java)
     }
 
+    fun <T> getService(service: Class<T>): T = retrofit.create(service)
 }

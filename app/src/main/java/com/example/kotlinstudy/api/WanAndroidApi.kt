@@ -18,7 +18,7 @@ interface WanAndroidApi {
     fun LoginApi(
         @Field("username") username: String,
         @Field("password") password: String
-    ): Observable<LoginBean>
+    ): Observable<ResponseWrapper<LoginBean>>
 
     @POST("/user/register")
     @FormUrlEncoded
@@ -26,5 +26,5 @@ interface WanAndroidApi {
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("repassword") repassword: String
-    ): Observable<LoginBean>
+    ): Observable<ResponseWrapper<LoginBean>>
 }

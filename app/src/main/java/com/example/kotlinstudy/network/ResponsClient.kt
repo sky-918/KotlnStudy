@@ -18,10 +18,12 @@ import java.net.UnknownHostException
 abstract class ResponsClient<T>(val context: Context) : Observer<ResponseWrapper<T>> {
     //默认显示加载框
     private var isShowLoading = true;
+
     abstract fun onSuccess(data: ResponseWrapper<T>)
     abstract fun onFail(statusCode: Int, responseMsg: ResponseError)
     override fun onComplete() {
         //取消加载框
+        LoadingDialog.cancle()
     }
 
     override fun onSubscribe(d: Disposable) {
