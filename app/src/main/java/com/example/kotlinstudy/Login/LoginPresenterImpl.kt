@@ -1,27 +1,39 @@
 package com.example.kotlinstudy.Login
 
+import android.content.Context
 import android.view.View
 import com.example.kotlinstudy.bean.LoginBean
 
 class LoginPresenterImpl(private var loginView: ILoginContract.ILoginView?) :
-    ILoginContract.ILoginPresenter ,ILoginContract.ILoginView{
-    override fun loginSucces(loginBean: LoginBean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    ILoginContract.ILoginPresenter,
+    ILoginContract.ILoginPresenter.ILoginResponsListener,
+    ILoginContract.ILoginPresenter.IRegisterResponsListener {
+    override fun onLoginSuccess(data: LoginBean?) {
+        loginView?.loginSucces(data)
     }
 
-    override fun loginFailure(errorMsg: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onLoginFailed(errorMsg: String) {
+        loginView?.loginFailure(errorMsg)
     }
+
+    override fun onRegisterSuccess(data: LoginBean?) {
+        loginView?.loginSucces(data)
+    }
+
+    override fun onRegisterFailed(errorMsg: String) {
+        loginView?.loginFailure(errorMsg)
+    }
+
 
     var loginModule: ILoginContract.ILoginModule = LoginModuleImpl()
 
 
-    override fun onLogin(name: String, password: String) {
-        loginModule.onLogin(name, password)
+    override fun onLogin(context: Context, name: String, password: String) {
+        loginModule.onLogin(context, name, password, this)
     }
 
-    override fun onRegister(name: String, password: String, repassword: String) {
-        loginModule.onRegister(name, password, repassword)
+    override fun onRegister(context: Context, name: String, password: String, repassword: String) {
+        loginModule.onRegister(context, name, password, repassword, this)
     }
 
     override fun attachView() {

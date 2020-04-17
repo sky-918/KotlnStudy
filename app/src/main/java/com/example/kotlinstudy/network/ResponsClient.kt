@@ -1,6 +1,7 @@
 package com.example.kotlinstudy.network
 
 import android.content.Context
+import android.util.Log
 import com.example.kotlinstudy.bean.ResponseWrapper
 import com.example.kotlinstudy.view.LoadingDialog
 import com.google.gson.Gson
@@ -15,11 +16,11 @@ import java.net.UnknownHostException
  *Created by TYY on 2020/4/10
  *Explain:
  */
-abstract class ResponsClient<T>(val context: Context) : Observer<ResponseWrapper<T>> {
+abstract class ResponsClient<T>(val context: Context) : Observer<ResponseWrapper<out T?>> {
     //默认显示加载框
-    private var isShowLoading = true;
+    private var isShowLoading = true
 
-    abstract fun onSuccess(data: ResponseWrapper<T>)
+    abstract fun onSuccess(T: T?)
     abstract fun onFail(statusCode: Int, responseMsg: ResponseError)
     override fun onComplete() {
         //取消加载框
@@ -32,8 +33,15 @@ abstract class ResponsClient<T>(val context: Context) : Observer<ResponseWrapper
             LoadingDialog.show(context)
     }
 
-    override fun onNext(t: ResponseWrapper<T>) {
-        onSuccess(t)
+    override fun onNext(t: ResponseWrapper<T?>) {
+        Log.i("onNext", "onNext: $t")
+        if (t.errorCode == 0) {
+            onSuccess(t.data)
+        } else {
+            val responsMsg: ResponseError = ResponseError(t.errorCode, t.errorMsg)
+            onFail(t.errorCode, responsMsg)
+        }
+
     }
 
     override fun onError(e: Throwable) {

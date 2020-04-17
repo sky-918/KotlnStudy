@@ -40,7 +40,7 @@ class RequstClient private constructor() {
             )
         }.build()
         retrofit = Retrofit.Builder().apply {
-            baseUrl("")
+            baseUrl("https://www.wanandroid.com/")
             addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             addConverterFactory(GsonConverterFactory.create())
             client(okHttpClient)
