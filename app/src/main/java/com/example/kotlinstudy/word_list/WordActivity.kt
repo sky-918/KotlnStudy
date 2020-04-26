@@ -9,9 +9,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android.roomwordssample.WordViewModel
 import com.example.kotlinstudy.R
 import com.example.kotlinstudy.data.Word
-import com.example.kotlinstudy.data.WordViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class WordActivity : AppCompatActivity() {
@@ -45,7 +45,7 @@ class WordActivity : AppCompatActivity() {
 
         if (requestCode == Companion.newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
             data?.getStringExtra(NewWordActivity.EXTRA_REPLY)?.let {
-                val word = Word(4,it)
+                val word = Word(it)
                 wordViewModel.insert(word)
             }
         } else {
