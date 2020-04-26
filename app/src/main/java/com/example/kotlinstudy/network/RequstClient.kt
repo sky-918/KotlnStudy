@@ -1,7 +1,9 @@
 package com.example.kotlinstudy.network
 
+import android.content.Context
 import com.example.kotlinstudy.BuildConfig
 import com.example.kotlinstudy.api.WanAndroidApi
+import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,7 +31,7 @@ class RequstClient private constructor() {
         val instance by lazy { Holder.INSTANCE }
     }
 
-    fun createRetrifitRequest() {
+    fun createRetrifitRequest(context: Context) {
         // apply 高阶函数 返回调用者本身
         val okHttpClient = OkHttpClient().newBuilder().apply {
             addInterceptor(
@@ -37,7 +39,8 @@ class RequstClient private constructor() {
                     if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
                     else HttpLoggingInterceptor.Level.NONE
                 )
-            )
+
+            ).addInterceptor(ChuckInterceptor(context))
         }.build()
         retrofit = Retrofit.Builder().apply {
             baseUrl("https://www.wanandroid.com/")

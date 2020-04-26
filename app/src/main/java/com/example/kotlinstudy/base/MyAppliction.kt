@@ -10,6 +10,6 @@ import com.example.kotlinstudy.network.RequstClient
 class MyAppliction : Application() {
     override fun onCreate() {
         super.onCreate()
-        RequstClient.instance.createRetrifitRequest()
+        RequstClient.instance.createRetrifitRequest(this)
     }
 }
