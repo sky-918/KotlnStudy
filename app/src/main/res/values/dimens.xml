@@ -16,4 +16,13 @@ limitations under the License. -->
     <dimen name="small_padding">8dp</dimen>
     <dimen name="big_padding">16dp</dimen>
     <dimen name="min_height">48dp</dimen>
+    <dimen name="about_me_title_size">18sp</dimen>
+    <dimen name="about_me_title_small_padding">8dp</dimen>
+    <dimen name="about_me_title_margin">16dp</dimen>
+    <dimen name="color_view_margin">16dp</dimen>
+    <dimen name="color_view_text_size">20sp</dimen>
+    <dimen name="color_view_box_two_size">130dp</dimen>
+    <dimen name="color_view_btn_10sp">10sp</dimen>
+    <dimen name="color_view_btn_15sp">15sp</dimen>
+    <dimen name="color_view_btn_30sp">30sp</dimen>
 </resources>
