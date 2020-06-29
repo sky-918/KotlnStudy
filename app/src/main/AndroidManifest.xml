@@ -14,17 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".basic_study.ColorViewActivity">
-
-        </activity>
-        <activity android:name=".basic_study.AboutMeActivity">
+        <activity android:name=".MainTestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".basic_study.MainActivity01_2"></activity>
+        <activity android:name=".basic_study.ColorViewActivity"></activity>
+        <activity android:name=".basic_study.AboutMeActivity">
+
+        </activity>
+        <activity android:name=".basic_study.MainActivity01_2" />
         <activity android:name=".word_list.NewWordActivity" />
         <activity android:name=".word_list.WordActivity" />
         <activity android:name=".Login.LoginActivity" />
