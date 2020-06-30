@@ -16,8 +16,8 @@ interface WordDao {
     fun getAlphabetizedWords(): LiveData<List<Word>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-     fun insert(word: Word)
+    fun insert(word: Word)
 
     @Query("DELETE FROM word_table")
-     fun deleteAll()
+    fun deleteAll()
 }
