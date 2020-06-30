@@ -13,26 +13,35 @@ import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.core.view.GestureDetectorCompat;
+
+import com.example.kotlinstudy.R;
 
 /**
  * 自定义的圆形进度按钮 用于录制视频页面的开始和暂停功能
  * Created by meng on 2017/11/8.
  */
 public class CircleButtonView extends View {
-    private Paint mBigCirclePaint;//外圈进度的背景色
-    private Paint mSmallCirclePaint;//内圈圆
-    private Paint mProgressCirclePaint;//外圈进度的颜色
-    private Paint mInnerSquarePaint;//内圈的正方形
+    private Paint mBigCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    ;//外圈进度的背景色
+    private Paint mSmallCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    ;//内圈圆
+    private Paint mProgressCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    ;//外圈进度的颜色
+    private Paint mInnerSquarePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    ;//内圈的正方形
 
     /**
      * 自定义使用的颜色资源id
      */
-    private int mBigCircleColorId=0;//外圈进度的背景色
-    private int mSmallCircleId=0;//内圈圆形的颜色
-    private int mProgressCircleId=0;//外圈进度条的颜色
-    private int mInnerSquareId=0;//内圈的正方形的颜色
+    private int mBigCircleColorId = 0;//外圈进度的背景色
+    private int mSmallCircleId = 0;//内圈圆形的颜色
+    private int mProgressCircleId = 0;//外圈进度条的颜色
+    private int mInnerSquareId = 0;//内圈的正方形的颜色
 
     private int mHeight;//当前View的高
     private int mWidth;//当前View的宽
@@ -43,17 +52,18 @@ public class CircleButtonView extends View {
 
     private int maxTime = 120;//录制最大时间s
     private float mProgressW = 17f;//圆环宽度
+    private GestureDetectorCompat mDetector;//手势识别
 
     public OnButtonStatusChangeListener listener;
 
     public CircleButtonView(Context context) {
         super(context);
-        init(context, null);
+//        init(context, null);
     }
 
     public CircleButtonView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs);
+//        init(context, attrs);
     }
 
     public CircleButtonView(Context context, AttributeSet attrs) {
@@ -63,31 +73,31 @@ public class CircleButtonView extends View {
 
     private void init(Context context, AttributeSet attrs) {
         //初始画笔抗锯齿、颜色
-        mBigCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        if (mBigCircleColorId!=0){
-            mBigCirclePaint.setColor(getResources().getColor(mBigCircleColorId));
-        }else{
-            mBigCirclePaint.setColor(getResources().getColor(android.R.color.white));
+
+        if (mBigCircleColorId != 0) {
+            mBigCirclePaint.setColor(getResources().getColor(R.color.colorAccent));
+        } else {
+            mBigCirclePaint.setColor(getResources().getColor(android.R.color.holo_red_dark));
         }
 
-        mSmallCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        if (mSmallCircleId!=0){
+
+        if (mSmallCircleId != 0) {
             mSmallCirclePaint.setColor(getResources().getColor(mSmallCircleId));
-        }else{
-            mSmallCirclePaint.setColor(getResources().getColor(android.R.color.holo_orange_dark));
+        } else {
+            mSmallCirclePaint.setColor(getResources().getColor(R.color.colorAccent));
         }
 
-        mProgressCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        if (mProgressCircleId!=0){
+
+        if (mProgressCircleId != 0) {
             mProgressCirclePaint.setColor(getResources().getColor(mProgressCircleId));
-        }else{
+        } else {
             mProgressCirclePaint.setColor(getResources().getColor(android.R.color.holo_orange_dark));
         }
 
-        mInnerSquarePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        if (mInnerSquareId!=0){
+
+        if (mInnerSquareId != 0) {
             mInnerSquarePaint.setColor(getResources().getColor(mInnerSquareId));
-        }else{
+        } else {
             mInnerSquarePaint.setColor(getResources().getColor(android.R.color.white));
         }
     }
@@ -111,9 +121,9 @@ public class CircleButtonView extends View {
         canvas.drawCircle(mWidth / 2, mHeight / 2, mSmallRadius, mSmallCirclePaint);
 
         //绘制里面的正方形
-        if (isRecording) {
+//        if (isRecording) {
             canvas.drawRect(mWidth / 3, mHeight / 3, mWidth - mWidth / 3, mHeight - mHeight / 3, mInnerSquarePaint);
-        }
+//        }
 
         //录制的过程中绘制进度条
         drawProgress(canvas);
@@ -134,6 +144,7 @@ public class CircleButtonView extends View {
         float sweepAngle = mCurrentProgress / maxTime * 360;
         canvas.drawArc(oval, -180, sweepAngle, false, mProgressCirclePaint);
     }
+
     /**
      * 绘制圆形进度的底色圈
      *
@@ -155,13 +166,14 @@ public class CircleButtonView extends View {
                 isRecording = !isRecording;
                 invalidate();
                 if (isRecording) {//开始播放
-                    mHandler.sendEmptyMessageDelayed(0, 1000);
-                    if (listener != null){
+
+                    mHandler.sendEmptyMessageDelayed(0, 0);
+                    if (listener != null) {
                         listener.onStart();
                     }
                 } else {//暂停播放
                     mHandler.removeCallbacksAndMessages(null);
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onStop();
                     }
                 }
@@ -197,7 +209,7 @@ public class CircleButtonView extends View {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (mHandler!=null){
+        if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
         }
     }
@@ -216,7 +228,7 @@ public class CircleButtonView extends View {
     }
 
     public void setmProgressW(float mProgressW) {
-        if (mProgressW>maxTime){
+        if (mProgressW > maxTime) {
             return;
         }
         this.mProgressW = mProgressW;

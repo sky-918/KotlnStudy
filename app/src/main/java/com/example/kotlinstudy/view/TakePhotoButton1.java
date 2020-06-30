@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,7 +27,7 @@ import com.example.kotlinstudy.R;
  * Created by CKZ on 2017/8/9.
  */
 
-public class TakePhotoButton extends View {
+public class TakePhotoButton1 extends View {
     private float circleWidth;//外圆环宽度
     private int outCircleColor;//外圆颜色
     private int innerCircleColor;//内圆颜色
@@ -35,46 +36,51 @@ public class TakePhotoButton extends View {
     private Paint outRoundPaint = new Paint(); //外圆画笔
     private Paint mCPaint = new Paint();//进度画笔
     private Paint innerRoundPaint = new Paint();
+    private Paint mBigCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private float width; //自定义view的宽度
     private float height; //自定义view的高度
     private float outRaduis; //外圆半径
     private float innerRaduis;//内圆半径
     private GestureDetectorCompat mDetector;//手势识别
     private boolean isLongClick;//是否长按
+    private boolean isNeedLongClick = false;//是否需要长按
+    private int maxCircleIndex = 1;//默认循环三次
     private float startAngle = -90;//开始角度
     private float mmSweepAngleStart = 0f;//起点
     private float mmSweepAngleEnd = 360f;//终点
     private float mSweepAngle;//扫过的角度
-    private int mLoadingTime;
+    private int mLoadingTime;//循环一次的时间
 
 
-    public TakePhotoButton(Context context) {
-        this(context,null);
-}
+    private int count = 0;
 
-    public TakePhotoButton(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs,0);
+    public TakePhotoButton1(Context context) {
+        this(context, null);
+    }
+
+    public TakePhotoButton1(Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
 
     }
 
-    public TakePhotoButton(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TakePhotoButton1(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context,attrs);
+        init(context, attrs);
     }
 
-    private void init(Context context,AttributeSet attrs){
+    private void init(Context context, AttributeSet attrs) {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TakePhotoButton);
-        outCircleColor = array.getColor(R.styleable.TakePhotoButton_outCircleColor,Color.parseColor("#E0E0E0"));
-        innerCircleColor = array.getColor(R.styleable.TakePhotoButton_innerCircleColor,Color.WHITE);
-        progressColor = array.getColor(R.styleable.TakePhotoButton_readColor,Color.GREEN);
-        mLoadingTime = array.getInteger(R.styleable.TakePhotoButton_maxSeconds,10);
+        outCircleColor = array.getColor(R.styleable.TakePhotoButton_outCircleColor, Color.parseColor("#000000"));
+        innerCircleColor = array.getColor(R.styleable.TakePhotoButton_innerCircleColor, Color.WHITE);
+        progressColor = array.getColor(R.styleable.TakePhotoButton_readColor, Color.GREEN);
+        mLoadingTime = array.getInteger(R.styleable.TakePhotoButton_maxSeconds, 10);
         mDetector = new GestureDetectorCompat(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
                 //单击
                 isLongClick = false;
                 if (listener != null) {
-                   listener.onClick(TakePhotoButton.this);
+                    listener.onClick(TakePhotoButton1.this);
                 }
                 return super.onSingleTapConfirmed(e);
             }
@@ -85,12 +91,11 @@ public class TakePhotoButton extends View {
                 isLongClick = true;
                 postInvalidate();
                 if (listener != null) {
-                    listener.onLongClick(TakePhotoButton.this);
+                    listener.onLongClick(TakePhotoButton1.this);
                 }
             }
         });
         mDetector.setIsLongpressEnabled(true);
-
 
 
     }
@@ -98,11 +103,11 @@ public class TakePhotoButton extends View {
     private void resetParams() {
         width = getWidth();
         height = getHeight();
-        circleWidth = width*0.13f;
-        outRaduis = (float) (Math.min(width, height)/2.4);
-        innerRaduis = outRaduis -circleWidth;
+        //tyy 圆环的宽度
+        circleWidth = 15f;
+        outRaduis = (float) (Math.min(width, height) / 2);
+        innerRaduis = outRaduis;
     }
-
 
 
     @Override
@@ -120,39 +125,47 @@ public class TakePhotoButton extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         resetParams();
-        //画外圆
+        //整体背景圆
         outRoundPaint.setAntiAlias(true);
         outRoundPaint.setColor(outCircleColor);
-        if (isLongClick){
-            setMinimumWidth((int) (width*1.2));
-           canvas.scale(1.2f,1.2f,width/2,width/2);
 
-        }else {
-            setMinimumWidth((int) width);
-        }
-        canvas.drawCircle(width/2,height/2, outRaduis, outRoundPaint);
+        setMinimumWidth((int) width);
+        canvas.drawCircle(width / 2, height / 2, outRaduis - circleWidth, outRoundPaint);
+
+        mBigCirclePaint.setStrokeWidth(circleWidth);
+        mBigCirclePaint.setStyle(Paint.Style.STROKE);
+        mBigCirclePaint.setColor(getResources().getColor(R.color.colorAccent));
+
+        //用于绘画圆环
+//        RectF oval = new RectF(0 + circleWidth, 0 + circleWidth, width - circleWidth, height - circleWidth);
+        RectF oval = new RectF(0 + circleWidth, 0 + circleWidth, width - circleWidth, height - circleWidth);
+        canvas.drawArc(oval, 0, 360, false, mBigCirclePaint);
+
         //画内圆
         innerRoundPaint.setAntiAlias(true);
         innerRoundPaint.setColor(innerCircleColor);
-        if (isLongClick){
-            canvas.drawCircle(width/2,height/2, innerRaduis /2.0f, innerRoundPaint);
+        innerRoundPaint.setColor(getResources().getColor(R.color.colorPrimary));
+        if (isLongClick || !isNeedLongClick) {
+            RectF rectF = new RectF(0 + circleWidth, 0 + circleWidth, width - circleWidth, height - circleWidth);
+
             //画外原环
             mCPaint.setAntiAlias(true);
             mCPaint.setColor(progressColor);
             mCPaint.setStyle(Paint.Style.STROKE);
             mCPaint.setStrokeCap(Paint.Cap.ROUND);
-            mCPaint.setStrokeWidth(circleWidth/2);
-            RectF rectF = new RectF(0+circleWidth,0+circleWidth,width-circleWidth,height-circleWidth);
-            canvas.drawArc(rectF,startAngle,mSweepAngle,false,mCPaint);
-        }else {
+            mCPaint.setStrokeWidth(circleWidth);
+            canvas.drawRoundRect(width / 3, height / 3, width - width / 3, height - height / 3, 10f, 10f, innerRoundPaint);
+            canvas.drawArc(rectF, startAngle, mSweepAngle, false, mCPaint);
+        } else {
 //            canvas.drawCircle(width/2,height/2, innerRaduis, innerRoundPaint);
 //            canvas.drawRect(width / 3, height / 3, width - width / 3, height - height / 3, innerRoundPaint);
-            canvas.drawRoundRect(width / 3, height / 3, width - width / 3, height - height / 3,10f,10f,innerRoundPaint);
+            canvas.drawRoundRect(width / 3, height / 3, width - width / 3, height - height / 3, 10f, 10f, innerRoundPaint);
         }
 
     }
 
     public void start() {
+
         ValueAnimator animator = ValueAnimator.ofFloat(mmSweepAngleStart, mmSweepAngleEnd);
         animator.setInterpolator(new LinearInterpolator());
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -160,6 +173,10 @@ public class TakePhotoButton extends View {
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 mSweepAngle = (float) valueAnimator.getAnimatedValue();
                 //获取到需要绘制的角度，重新绘制
+
+                float time = mSweepAngle / 360 * mLoadingTime + count * mLoadingTime;
+                Log.e("画圆3", time + "");
+                listener.onTimeLong(time);
                 invalidate();
             }
         });
@@ -170,6 +187,7 @@ public class TakePhotoButton extends View {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 int time = (int) valueAnimator.getAnimatedValue();
+                Log.e("画圆2", time + "");
             }
         });
         AnimatorSet set = new AnimatorSet();
@@ -181,12 +199,18 @@ public class TakePhotoButton extends View {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                clearAnimation();
-                isLongClick = false;
-                postInvalidate();
-                if (listener != null) {
-                    listener.onFinish();
+                count++;
+                if (count < maxCircleIndex) {
+                    start();
+                } else {
+                    clearAnimation();
+                    isLongClick = false;
+                    postInvalidate();
+                    if (listener != null) {
+                        listener.onFinish();
+                    }
                 }
+
             }
         });
 
@@ -195,7 +219,7 @@ public class TakePhotoButton extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         mDetector.onTouchEvent(event);
-        switch(MotionEventCompat.getActionMasked(event)) {
+        switch (MotionEventCompat.getActionMasked(event)) {
             case MotionEvent.ACTION_DOWN:
                 isLongClick = false;
                 break;
@@ -225,22 +249,32 @@ public class TakePhotoButton extends View {
     public interface OnProgressTouchListener {
         /**
          * 单击
+         *
          * @param photoButton
          */
-        void onClick(TakePhotoButton photoButton);
+        void onClick(TakePhotoButton1 photoButton);
 
         /**
          * 长按
+         *
          * @param photoButton
          */
-        void onLongClick(TakePhotoButton photoButton);
+        void onLongClick(TakePhotoButton1 photoButton);
 
         /**
          * 长按抬起
+         *
          * @param photoButton
          */
-        void onLongClickUp(TakePhotoButton photoButton);
+        void onLongClickUp(TakePhotoButton1 photoButton);
 
+        /**
+         * 计算时间
+         *
+         * @param time
+         */
+
+        void onTimeLong(float time);
 
         void onFinish();
     }
