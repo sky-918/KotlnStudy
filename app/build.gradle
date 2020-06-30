@@ -3,20 +3,27 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 android {
+    //编译时可以使用的api最高版本，api28对应的是Android9.0
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.kotlinstudy"
+//        最小支持的api版本
         minSdkVersion 26
+        //This value is the most recent API that you have tested your app against. In many cases this is the same value as compileSdkVersion.
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    dataBinding {
+        enabled = true
     }
 }
 

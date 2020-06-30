@@ -10,4 +10,30 @@
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Word not saved because it is empty.</string>
     <string name="add_word">Add word</string>
+    <string name="basic_change">切换</string>
+    <string name="basic_clear">清除</string>
+    <string name="about_me_title">美人兮</string>
+    <string name="about_me_yellow_start">黄色的星星</string>
+    <string name="poem_text">有一美人兮，见之不忘。
+\n一日不见兮，思之如狂。
+\n凤飞翱翔兮，四海求凰。
+\n无奈佳人兮，不在东墙。
+\n将琴代语兮，聊写衷肠。
+\n何日见许兮，慰我彷徨。
+\n愿言配德兮，携手相将。
+\n不得於飞兮，使我沦亡。
+</string>
+    <string name="What_is_your_name">What\'s your name?</string>
+    <string name="done">Done</string>
+    <string name="message">请输入</string>
+    <string name="color_view_box_one">Box One</string>
+    <string name="color_view_box_two">Box Two</string>
+    <string name="color_view_box_three">Box Three</string>
+    <string name="color_view_box_four">Box Four</string>
+    <string name="color_view_box_five">Box Five</string>
+    <string name="color_view_btn_one">Btn One</string>
+    <string name="color_view_btn_two">Btn Two</string>
+    <string name="color_view_btn_three">Btn Three</string>
+    <string name="color_view_btn_four">Btn Four</string>
+
 </resources>
