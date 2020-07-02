@@ -1,19 +1,20 @@
 package com.example.kotlinstudy;
 
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kotlinstudy.view.CircleButtonView;
 import com.example.kotlinstudy.view.TakePhotoButton;
-import com.example.kotlinstudy.view.TakePhotoButton1;
+import com.example.kotlinstudy.view.PhotoButton;
 
 
 public class MainTestActivity extends AppCompatActivity {
 
 
-    private TakePhotoButton1 buttontake;
+    private PhotoButton buttontake;
     private TakePhotoButton button;
     CircleButtonView circleView;
 
@@ -21,33 +22,38 @@ public class MainTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_test);
-        this.buttontake = (TakePhotoButton1) findViewById(R.id.button_take);
+        this.buttontake = (PhotoButton) findViewById(R.id.button_take);
         button = (TakePhotoButton) findViewById(R.id.normal_btn);
         circleView = (CircleButtonView) findViewById(R.id.circleView);
         circleView.setMaxTime(20);
 
-        buttontake.setOnProgressTouchListener(new TakePhotoButton1.OnProgressTouchListener() {
+        buttontake.setOnProgressTouchListener(new PhotoButton.OnProgressTouchListener() {
             @Override
-            public void onClick(TakePhotoButton1 photoButton) {
+            public void onClick(PhotoButton photoButton) {
                 Toast.makeText(MainTestActivity.this, "单机", Toast.LENGTH_SHORT).show();
-                buttontake.start();
+//                buttontake.onStop();
             }
 
             @Override
-            public void onLongClick(TakePhotoButton1 photoButton) {
+            public void onLongClick(PhotoButton photoButton) {
                 Toast.makeText(MainTestActivity.this, "长按", Toast.LENGTH_SHORT).show();
                 buttontake.start();
 
             }
 
             @Override
-            public void onLongClickUp(TakePhotoButton1 photoButton) {
-                onFinish();
+            public void onLongClickUp(PhotoButton photoButton) {
+
             }
+
 
             @Override
             public void onTimeLong(float time) {
-
+                TextView tv = (TextView) findViewById(R.id.tv_five);
+                String ss = String.format("%.1f", time);
+                if (tv != null) {
+                    tv.setText(ss + " 丨60.0");
+                }
             }
 
 

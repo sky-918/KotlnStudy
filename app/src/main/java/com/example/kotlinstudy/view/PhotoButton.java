@@ -27,7 +27,7 @@ import com.example.kotlinstudy.R;
  * Created by CKZ on 2017/8/9.
  */
 
-public class TakePhotoButton1 extends View {
+public class PhotoButton extends View {
     private float circleWidth;//外圆环宽度
     private int outCircleColor;//外圆颜色
     private int innerCircleColor;//内圆颜色
@@ -44,7 +44,8 @@ public class TakePhotoButton1 extends View {
     private GestureDetectorCompat mDetector;//手势识别
     private boolean isLongClick;//是否长按
     private boolean isNeedLongClick = false;//是否需要长按
-    private int maxCircleIndex = 1;//默认循环三次
+    private boolean isShowCenterRectangle = false;//是否需要展示中心矩形
+    private int maxCircleIndex = 4;//默认循环三次
     private float startAngle = -90;//开始角度
     private float mmSweepAngleStart = 0f;//起点
     private float mmSweepAngleEnd = 360f;//终点
@@ -54,16 +55,16 @@ public class TakePhotoButton1 extends View {
 
     private int count = 0;
 
-    public TakePhotoButton1(Context context) {
+    public PhotoButton(Context context) {
         this(context, null);
     }
 
-    public TakePhotoButton1(Context context, @Nullable AttributeSet attrs) {
+    public PhotoButton(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
 
     }
 
-    public TakePhotoButton1(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public PhotoButton(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
@@ -74,13 +75,15 @@ public class TakePhotoButton1 extends View {
         innerCircleColor = array.getColor(R.styleable.TakePhotoButton_innerCircleColor, Color.WHITE);
         progressColor = array.getColor(R.styleable.TakePhotoButton_readColor, Color.GREEN);
         mLoadingTime = array.getInteger(R.styleable.TakePhotoButton_maxSeconds, 10);
+        maxCircleIndex = array.getInteger(R.styleable.TakePhotoButton_maxSeconds, 10);
+        isNeedLongClick = array.getBoolean(R.styleable.TakePhotoButton_maxSeconds, false);
         mDetector = new GestureDetectorCompat(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
                 //单击
                 isLongClick = false;
                 if (listener != null) {
-                    listener.onClick(TakePhotoButton1.this);
+                    listener.onClick(PhotoButton.this);
                 }
                 return super.onSingleTapConfirmed(e);
             }
@@ -91,7 +94,7 @@ public class TakePhotoButton1 extends View {
                 isLongClick = true;
                 postInvalidate();
                 if (listener != null) {
-                    listener.onLongClick(TakePhotoButton1.this);
+                    listener.onLongClick(PhotoButton.this);
                 }
             }
         });
@@ -144,28 +147,32 @@ public class TakePhotoButton1 extends View {
         //画内圆
         innerRoundPaint.setAntiAlias(true);
         innerRoundPaint.setColor(innerCircleColor);
-        innerRoundPaint.setColor(getResources().getColor(R.color.colorPrimary));
         if (isLongClick || !isNeedLongClick) {
-            RectF rectF = new RectF(0 + circleWidth, 0 + circleWidth, width - circleWidth, height - circleWidth);
 
-            //画外原环
-            mCPaint.setAntiAlias(true);
-            mCPaint.setColor(progressColor);
-            mCPaint.setStyle(Paint.Style.STROKE);
-            mCPaint.setStrokeCap(Paint.Cap.ROUND);
-            mCPaint.setStrokeWidth(circleWidth);
-            canvas.drawRoundRect(width / 3, height / 3, width - width / 3, height - height / 3, 10f, 10f, innerRoundPaint);
-            canvas.drawArc(rectF, startAngle, mSweepAngle, false, mCPaint);
-        } else {
-//            canvas.drawCircle(width/2,height/2, innerRaduis, innerRoundPaint);
-//            canvas.drawRect(width / 3, height / 3, width - width / 3, height - height / 3, innerRoundPaint);
-            canvas.drawRoundRect(width / 3, height / 3, width - width / 3, height - height / 3, 10f, 10f, innerRoundPaint);
+            onDrawCircle(canvas);
+
         }
+        if (isShowCenterRectangle)
+            canvas.drawRoundRect(width / 3, height / 3, width - width / 3, height - height / 3, 10f, 10f, innerRoundPaint);
 
+    }
+
+    //画圆环
+    private void onDrawCircle(Canvas canvas) {
+        RectF rectF = new RectF(0 + circleWidth, 0 + circleWidth, width - circleWidth, height - circleWidth);
+        //画外原环
+        mCPaint.setAntiAlias(true);
+        mCPaint.setColor(progressColor);
+        mCPaint.setStyle(Paint.Style.STROKE);
+        mCPaint.setStrokeCap(Paint.Cap.ROUND);
+        mCPaint.setStrokeWidth(circleWidth);
+        canvas.drawArc(rectF, startAngle, mSweepAngle, false, mCPaint);
     }
 
     public void start() {
 
+
+        isShowCenterRectangle = true;
         ValueAnimator animator = ValueAnimator.ofFloat(mmSweepAngleStart, mmSweepAngleEnd);
         animator.setInterpolator(new LinearInterpolator());
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -173,9 +180,8 @@ public class TakePhotoButton1 extends View {
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 mSweepAngle = (float) valueAnimator.getAnimatedValue();
                 //获取到需要绘制的角度，重新绘制
-
                 float time = mSweepAngle / 360 * mLoadingTime + count * mLoadingTime;
-                Log.e("画圆3", time + "");
+                Log.e("时间11111111111111    ", time + "");
                 listener.onTimeLong(time);
                 invalidate();
             }
@@ -187,10 +193,11 @@ public class TakePhotoButton1 extends View {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 int time = (int) valueAnimator.getAnimatedValue();
-                Log.e("画圆2", time + "");
+                Log.e("时间2  ", time + "");
             }
         });
         AnimatorSet set = new AnimatorSet();
+
         set.playTogether(animator, animator1);
         set.setDuration(mLoadingTime * 1000);
         set.setInterpolator(new LinearInterpolator());
@@ -199,8 +206,9 @@ public class TakePhotoButton1 extends View {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                count++;
-                if (count < maxCircleIndex) {
+                Log.e("次数  ", count + "");
+                if (count < maxCircleIndex - 1) {
+                    count++;
                     start();
                 } else {
                     clearAnimation();
@@ -215,6 +223,22 @@ public class TakePhotoButton1 extends View {
         });
 
     }
+//
+//    public void onStop() {
+//        if (set.isRunning()) {
+//            set.pause();
+////            clearAnimation();
+//            postInvalidate();
+//            if (listener != null) {
+//                listener.onFinish();
+//            }
+//        }
+//    }
+//
+//    public void onClear() {
+//        set.cancel();
+//        clearAnimation();
+//    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -252,21 +276,21 @@ public class TakePhotoButton1 extends View {
          *
          * @param photoButton
          */
-        void onClick(TakePhotoButton1 photoButton);
+        void onClick(PhotoButton photoButton);
 
         /**
          * 长按
          *
          * @param photoButton
          */
-        void onLongClick(TakePhotoButton1 photoButton);
+        void onLongClick(PhotoButton photoButton);
 
         /**
          * 长按抬起
          *
          * @param photoButton
          */
-        void onLongClickUp(TakePhotoButton1 photoButton);
+        void onLongClickUp(PhotoButton photoButton);
 
         /**
          * 计算时间
