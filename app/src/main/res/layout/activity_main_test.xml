@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:background="#000000">
 
-    <com.example.kotlinstudy.view.TakePhotoButton
+    <com.example.kotlinstudy.view.PhotoButton
         android:id="@+id/button_take"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerInParent="true"
         app:innerCircleColor="@android:color/holo_red_light"
-        app:outCircleColor="@android:color/white"
+        app:outCircleColor="@android:color/holo_red_dark"
         app:readColor="@android:color/holo_red_light" />
 
     <com.example.kotlinstudy.view.TakePhotoButton
@@ -23,6 +23,16 @@
 
     <com.example.kotlinstudy.view.CircleButtonView
         android:id="@+id/circleView"
-        android:layout_width="50dp"
-        android:layout_height="50dp" />
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/button_take"
+        android:layout_marginEnd="27dp"
+        android:layout_marginBottom="51dp"
+        android:layout_toStartOf="@+id/normal_btn" />
+    <TextView
+        android:id="@+id/tv_five"
+        android:layout_width="wrap_content"
+        android:textColor="#fff"
+        android:textSize="14sp"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

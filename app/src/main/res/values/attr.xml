@@ -2,12 +2,16 @@
 <resources>
     <declare-styleable name="TakePhotoButton">
         <!--外圆颜色-->
-        <attr name="outCircleColor" format="color"/>
+        <attr name="outCircleColor" format="color" />
         <!--内圆颜色-->
-        <attr name="innerCircleColor" format="color"/>
+        <attr name="innerCircleColor" format="color" />
         <!--进度条颜色-->
-        <attr name="readColor" format="color"/>
+        <attr name="readColor" format="color" />
         <!--录制时间-->
-        <attr name="maxSeconds" format="integer"/>
+        <attr name="maxSeconds" format="integer" />
+        <!--循环圈数-->
+        <attr name="maxCircleIndex" format="integer" />
+        <!--是否需要展示中间的矩形-->
+        <attr name="isNeedLongClick" format="boolean" />
     </declare-styleable>
 </resources>
