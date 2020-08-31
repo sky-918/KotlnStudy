@@ -26,6 +26,8 @@
         android:layout_marginTop="136dp"
         android:ems="10"
         android:hint="请输入账号"
+        android:imeOptions="actionSend"
+        android:privateImeOptions="发送呀"
         android:inputType="textPersonName"
         android:text="tyy_android"
         app:layout_constraintEnd_toEndOf="parent"
