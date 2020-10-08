@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <!--    <com.example.kotlinstudy.view.slide.DragView-->
+    <!--        android:layout_width="10dp"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:background="#FF0000" />-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/chuck_colorPrimary" />
+
+    <com.example.kotlinstudy.view.slide.SlideLayoutView
+        android:id="@+id/slideView"
+        android:layout_width="10dp"
+
+        android:layout_height="200dp"
+        android:background="#FF0000" />
+
+    <!--    <com.example.kotlinstudy.view.slide.DragViewToOld-->
+    <!--        android:layout_width="100dp"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:background="#FF0000" />-->
+
+    <!--    <com.example.kotlinstudy.view.slide.DragView-->
+    <!--        android:layout_width="100dp"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_marginTop="2dp"-->
+    <!--        android:background="#FF0000" />-->
+
+    <!--    <com.example.kotlinstudy.view.slide.DragViewScroll-->
+    <!--        android:layout_width="100dp"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_marginTop="4dp"-->
+    <!--        android:background="#FF0000" />-->
+
+    <com.example.kotlinstudy.view.PhotoButton
+        android:id="@+id/button_take"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        app:innerCircleColor="@android:color/holo_red_light"
+        app:outCircleColor="@android:color/holo_red_dark"
+        app:readColor="@android:color/holo_red_light" />
+
+    <com.example.kotlinstudy.view.slide.SlideLineView
+        android:id="@+id/slideLine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp" />
+</LinearLayout>

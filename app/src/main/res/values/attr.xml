@@ -14,4 +14,8 @@
         <!--是否需要展示中间的矩形-->
         <attr name="isNeedLongClick" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="SlideLayoutView">
+        <attr name="lineWidth" format="dimension"/>
+        <attr name="lineColor" format="color" />
+    </declare-styleable>
 </resources>
