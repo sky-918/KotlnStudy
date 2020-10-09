@@ -1,9 +1,11 @@
 package com.example.kotlinstudy.savedata
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.kotlinstudy.R
 import kotlinx.android.synthetic.main.activity_save_data.*
 import java.io.BufferedReader
@@ -12,13 +14,14 @@ import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 
 class SaveDataActivity : AppCompatActivity() {
+    private lateinit var dbHelper: MyDatabaseHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save_data)
+        dbHelper = MyDatabaseHelper(this, "BookStore.db", 2)
         btnFileSave.setOnClickListener {
             //保存数据
             onSaveFileData()
-
         }
         btnSaveShared.setOnClickListener {
             onSaveSharedPreferences()
@@ -26,11 +29,40 @@ class SaveDataActivity : AppCompatActivity() {
         btnSqlSave.setOnClickListener {
             saveSql()
         }
+        addData.setOnClickListener {
+            onAddData()
+        }
+        BtnShowData.setOnClickListener {
+            onShowData()
+        }
+    }
+
+    private fun onShowData() {
+        val db = dbHelper.writableDatabase
+        val cursor = db.query("Book", null, null, null, null, null, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val name = cursor.getString(cursor.getColumnIndex("name"))
+                Log.d("dbHelper", name)
+            } while (cursor.moveToNext())
+
+        }
+        cursor.close()
+    }
+
+    private fun onAddData() {
+        val db = dbHelper.writableDatabase
+        val values1 = ContentValues().apply {
+            put("name", "Kotlin")
+            put("author", "ll")
+            put("pages", 500)
+            put("price", 79.0)
+        }
+        db.insert("Book", null, values1)
     }
 
     private fun saveSql() {
 
-        val dbHelper = MyDatabaseHelper(this, "BookStore.db", 1)
         dbHelper.writableDatabase
 
     }

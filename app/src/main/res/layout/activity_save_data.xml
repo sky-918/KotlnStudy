@@ -78,8 +78,32 @@
         android:id="@+id/btnSqlSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
+        android:layout_marginTop="20dp"
         android:text="saveSql"
-        app:layout_constraintTop_toBottomOf="@+id/etInfo"
-        tools:layout_editor_absoluteX="159dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.548"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etInfo" />
+
+    <Button
+        android:id="@+id/addData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="addData"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnSqlSave"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/btnSqlSave"
+        app:layout_constraintTop_toBottomOf="@+id/btnSqlSave"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/BtnShowData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ShowDate"
+        app:layout_constraintEnd_toEndOf="@+id/addData"
+        app:layout_constraintStart_toStartOf="@+id/addData"
+        app:layout_constraintTop_toBottomOf="@+id/addData" />
 </androidx.constraintlayout.widget.ConstraintLayout>

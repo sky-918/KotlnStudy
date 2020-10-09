@@ -116,6 +116,7 @@ public class PhotoButton extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        Log.d("PhotoButton", "onMeasure");
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
         if (width > height) {
@@ -127,6 +128,7 @@ public class PhotoButton extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        Log.d("PhotoButton", "onDraw");
         resetParams();
         //整体背景圆
         outRoundPaint.setAntiAlias(true);
