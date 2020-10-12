@@ -35,6 +35,19 @@ class SaveDataActivity : AppCompatActivity() {
         BtnShowData.setOnClickListener {
             onShowData()
         }
+
+
+        updateData.setOnClickListener {
+            onUpdateData()
+        }
+    }
+
+    private fun onUpdateData() {
+        val db = dbHelper.writableDatabase
+        val values = ContentValues()
+        values.put("name", "Kkkkkotlin")
+        db.update("Book", values, "name= ?", arrayOf("Kotlin"))
+
     }
 
     private fun onShowData() {

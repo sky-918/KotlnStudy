@@ -99,6 +99,18 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
+        android:id="@+id/updateData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="updateData"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnSqlSave"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/btnSqlSave"
+        app:layout_constraintTop_toBottomOf="@+id/BtnShowData"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
         android:id="@+id/BtnShowData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
