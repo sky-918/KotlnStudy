@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import com.example.kotlinstudy.R
 import kotlinx.android.synthetic.main.activity_save_data.*
+import timber.log.Timber
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.InputStreamReader
@@ -40,6 +41,8 @@ class SaveDataActivity : AppCompatActivity() {
         updateData.setOnClickListener {
             onUpdateData()
         }
+        deleteData.setOnClickListener { onDeleteData() }
+        queryData.setOnClickListener { onQueryData() }
     }
 
     private fun onUpdateData() {
@@ -48,6 +51,28 @@ class SaveDataActivity : AppCompatActivity() {
         values.put("name", "Kkkkkotlin")
         db.update("Book", values, "name= ?", arrayOf("Kotlin"))
 
+    }
+
+
+    private fun onDeleteData() {
+
+        val db = dbHelper.writableDatabase
+        db.delete("Book", "name=?", arrayOf("kotlin"))
+
+    }
+
+
+    private fun onQueryData() {
+        val db = dbHelper.writableDatabase
+        val cursor = db.query("Book", null, null, null, null, null, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val name = cursor.getString(cursor.getColumnIndex("name"))
+                Timber.d("数据库数据：$name")
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        //这样查询的结果有问题，只出现了两条数据
     }
 
     private fun onShowData() {
@@ -82,7 +107,11 @@ class SaveDataActivity : AppCompatActivity() {
 
     @SuppressLint("CommitPrefEdits")
     private fun onSaveSharedPreferences() {
+
 //        val shared = getSharedPreferences("data_share", Context.MODE_PRIVATE).edit()
+
+
+//        method by passing in this activity'sclass name as the preferences name.（这个activity的名字作为文件名）
         val shared = getPreferences(Context.MODE_PRIVATE).edit()
 
         shared.putString("name", etName.text.toString())
@@ -94,7 +123,7 @@ class SaveDataActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val str = loadData()
+        val str = loadFileData()
         if (!str.isNullOrEmpty()) {
             etFile.setText(str)
         }
@@ -122,12 +151,14 @@ class SaveDataActivity : AppCompatActivity() {
 
     fun onSaveFileData() {
         val str = etFile.text.toString()
+//        MODE_APPEND  追加在后面
+//        MODE_PRIVATE 覆盖文件
         val outOpen = openFileOutput("dataFile", Context.MODE_PRIVATE)
         val writer = BufferedWriter(OutputStreamWriter(outOpen))
         writer.use { it.write(str) }
     }
 
-    fun loadData(): String {
+    fun loadFileData(): String {
         val str = StringBuilder()
         val input = openFileInput("dataFile")
         val reader = BufferedReader(InputStreamReader(input))
