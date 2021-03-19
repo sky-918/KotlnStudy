@@ -5,8 +5,7 @@ import java.util.Objects;
 /**
  * 比较equals和==区别
  */
- class Value
-{
+class Value {
     int i;
 
     @Override
@@ -22,6 +21,7 @@ import java.util.Objects;
         return Objects.hash(i);
     }
 }
+
 public class EqualsTest {
 
     public static void main(String[] args) {
@@ -67,6 +67,14 @@ public class EqualsTest {
         System.out.println(v1.equals(v2));//（1）flase
         System.out.println(v1 == v2);//（2）false
 
+        //这两种创建变量等方法不一样，保存等方式也是不同等；c_String和d_String是在栈中创建了两个名称
+        // 但是指向的是常量池中的同一个地址；new的时候每次都是把堆里面的地址引用指向栈
+        String a_String = new String("111");
+        String b_String = new String("111");
+        System.out.println(a_String==b_String);
+        String c_String="111";
+        String d_String="111";
+        System.out.println(d_String==c_String);
 
     }
 }

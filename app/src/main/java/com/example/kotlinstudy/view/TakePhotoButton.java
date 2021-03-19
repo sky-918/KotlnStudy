@@ -130,6 +130,7 @@ public class TakePhotoButton extends View {
         }else {
             setMinimumWidth((int) width);
         }
+
         canvas.drawCircle(width/2,height/2, outRaduis, outRoundPaint);
         //画内圆
         innerRoundPaint.setAntiAlias(true);
@@ -149,6 +150,7 @@ public class TakePhotoButton extends View {
 //            canvas.drawRect(width / 3, height / 3, width - width / 3, height - height / 3, innerRoundPaint);
             canvas.drawRoundRect(width / 3, height / 3, width - width / 3, height - height / 3,10f,10f,innerRoundPaint);
         }
+
 
     }
 
