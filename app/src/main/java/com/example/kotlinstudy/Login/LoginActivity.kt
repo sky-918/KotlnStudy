@@ -8,6 +8,7 @@ import com.example.kotlinstudy.R
 import com.example.kotlinstudy.api.WanAndroidApi
 import com.example.kotlinstudy.bean.LoginBean
 import com.example.kotlinstudy.network.RequstClient
+import com.example.kotlinstudy.round.RoundCornerActivity
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -48,6 +49,9 @@ class LoginActivity : RxAppCompatActivity(), ILoginContract.ILoginView {
                 operationString = "登录"
 
                 loginPreset.onLogin(this, userName, password)
+
+
+                RoundCornerActivity.newInstance(this)
             }
             R.id.btn_register -> {
                 val userName: String = et_account.text.toString()
