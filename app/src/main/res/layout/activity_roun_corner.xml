@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -20,4 +21,12 @@
         android:textColor="#5A5B5D"
         android:textSize="14sp"
         android:layout_marginStart="9dp" />
+    
+    <com.example.kotlinstudy.view.DialView
+        android:id="@+id/dialView"
+        android:layout_width="@dimen/fan_dimen"
+        app:fanColor1="#FFEB3B"
+        app:fanColor2="#CDDC39"
+        app:fanColor3="#009688"
+        android:layout_height="@dimen/fan_dimen"/>
 </LinearLayout>

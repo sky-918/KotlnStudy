@@ -25,4 +25,7 @@ limitations under the License. -->
     <dimen name="color_view_btn_10sp">10sp</dimen>
     <dimen name="color_view_btn_15sp">15sp</dimen>
     <dimen name="color_view_btn_30sp">30sp</dimen>
+    <dimen name="default_margin">8dp</dimen>
+    <dimen name="margin_top">24dp</dimen>
+    <dimen name="fan_dimen">250dp</dimen>
 </resources>

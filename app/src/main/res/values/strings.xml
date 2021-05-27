@@ -35,5 +35,8 @@
     <string name="color_view_btn_two">Btn Two</string>
     <string name="color_view_btn_three">Btn Three</string>
     <string name="color_view_btn_four">Btn Four</string>
-
+    <string name="fan_off">off</string>
+    <string name="fan_low">1</string>
+    <string name="fan_medium">2</string>
+    <string name="fan_high">3</string>
 </resources>
