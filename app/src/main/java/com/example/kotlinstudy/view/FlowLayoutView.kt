@@ -1,30 +1,26 @@
-package com.example.kotlinstudy.view;
+package com.example.kotlinstudy.view
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.util.AttributeSet;
-import android.view.ViewGroup;
+import android.content.Context
+import android.util.AttributeSet
+import android.view.ViewGroup
 
-public class FlowLayoutView  extends ViewGroup {
-    public FlowLayoutView(Context context) {
-        super(context);
+class FlowLayoutView : ViewGroup {
+    constructor(context: Context?) : super(context) {}
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {}
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
     }
 
-    public FlowLayoutView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-
+    constructor(
+        context: Context?,
+        attrs: AttributeSet?,
+        defStyleAttr: Int,
+        defStyleRes: Int
+    ) : super(context, attrs, defStyleAttr, defStyleRes) {
     }
 
-    public FlowLayoutView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-    public FlowLayoutView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-
-    }
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
 }

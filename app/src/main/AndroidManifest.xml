@@ -14,10 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".round.RoundCornerActivity"></activity>
-        <activity android:name=".view.slide.TestSlideViewActivity"></activity>
-        <activity android:name=".savedata.SaveDataActivity"></activity>
-        <activity android:name=".MainTestActivity"></activity>
+        <activity android:name=".time.CountdownActivity" />
+        <activity android:name=".round.RoundCornerActivity" />
+        <activity android:name=".view.slide.TestSlideViewActivity" />
+        <activity android:name=".savedata.SaveDataActivity" />
+        <activity android:name=".MainTestActivity" />
         <activity android:name=".basic_study.ColorViewActivity" />
         <activity android:name=".basic_study.AboutMeActivity" />
         <activity android:name=".basic_study.MainActivity01_2" />
