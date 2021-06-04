@@ -89,3 +89,5 @@ lint/tmp/
 # lint/reports/
 
 将删除 .DS_Store
+!/.idea/compiler.xml
+
