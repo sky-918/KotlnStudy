@@ -15,12 +15,17 @@
         <attr name="isNeedLongClick" format="boolean" />
     </declare-styleable>
     <declare-styleable name="SlideLayoutView">
-        <attr name="lineWidth" format="dimension"/>
+        <attr name="lineWidth" format="dimension" />
         <attr name="lineColor" format="color" />
     </declare-styleable>
     <declare-styleable name="DialView">
         <attr name="fanColor1" format="color" />
         <attr name="fanColor2" format="color" />
         <attr name="fanColor3" format="color" />
+    </declare-styleable>
+    <declare-styleable name="CountDownView">
+        <attr name="android:textColor" format="color" />
+        <attr name="android:textSize" format="dimension" />
+        <attr name="bg" format="integer" />
     </declare-styleable>
 </resources>

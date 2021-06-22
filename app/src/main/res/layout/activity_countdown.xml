@@ -11,8 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="优惠券倒计时:"
+        android:onClick="onClickButton"
         android:textColor="#000"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        tools:ignore="OnClick" />
 
     <TextView
         android:id="@+id/tv_day"
@@ -64,8 +66,10 @@
         android:layout_height="wrap_content"
         android:text="29" />
 
+
     <com.example.kotlinstudy.view.CountDownView
         android:id="@+id/cdv"
+        android:background="@color/cardview_dark_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

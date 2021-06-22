@@ -122,4 +122,8 @@ class CountdownActivity : AppCompatActivity() {
         stringBuilder.clear()
         return result
     }
+
+    fun onClickButton(view: View) {
+        cdv
+    }
 }

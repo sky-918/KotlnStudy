@@ -49,7 +49,7 @@
     <TextView
         android:id="@+id/tv_second"
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="3dp"
         android:gravity="center"
@@ -63,7 +63,7 @@
     <TextView
         android:id="@+id/tv_milli_second"
         android:layout_width="wrap_content"
-        android:layout_height="18dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:gravity="center"
         android:text="29" />

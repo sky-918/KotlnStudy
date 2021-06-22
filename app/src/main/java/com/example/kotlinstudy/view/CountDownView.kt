@@ -2,18 +2,17 @@ package com.example.kotlinstudy.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.TypedArray
 import android.os.Handler
 import android.os.Message
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.example.kotlinstudy.R
 import kotlinx.android.synthetic.main.activity_countdown.*
 import kotlinx.android.synthetic.main.view_countdown_time.view.*
-import timber.log.Timber
 import java.util.*
+
 
 /**
  * @author Created by tyy on 2021/6/4
@@ -25,12 +24,28 @@ class CountDownView : LinearLayout {
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-
+        initView(context, attrs)
     }
 
-    init {
+    @SuppressLint("Recycle", "ResourceAsColor")
+    private fun initView(context: Context?, attrs: AttributeSet?) {
         LayoutInflater.from(context).inflate(R.layout.view_countdown_time, this, true)
+        val attributes: TypedArray? =
+            context?.obtainStyledAttributes(attrs, R.styleable.CountDownView)
 
+        val textColor =
+            attributes?.getColor(R.styleable.CountDownView_android_textColor, R.color.buttonLabel)
+        val textSize = attributes?.getDimension(R.styleable.CountDownView_android_textSize, 20f)
+        tv_day.setTextColor(textColor!!)
+        tv_hour.setTextColor(textColor)
+        tv_minute.setTextColor(textColor)
+        tv_second.setTextColor(textColor)
+        tv_milli_second.setTextColor(textColor)
+        tv_day.textSize = textSize!!
+        tv_hour.textSize = textSize
+        tv_minute.textSize = textSize
+        tv_second.textSize = textSize
+        tv_milli_second.textSize = textSize
         if (stringBuilder == null) {
             stringBuilder = StringBuilder()
         }
@@ -42,7 +57,10 @@ class CountDownView : LinearLayout {
                         Companion.SHOW_TIME_FLAG -> {
                             val showTime = endTimeMilliSecend - Calendar.getInstance().timeInMillis
                             setTextTime(showTime, stringBuilder!!)
-                            mHandler!!.sendEmptyMessageDelayed(SHOW_TIME_FLAG, SHOW_TIME_INTERVAL_FLAG)
+                            mHandler!!.sendEmptyMessageDelayed(
+                                SHOW_TIME_FLAG,
+                                SHOW_TIME_INTERVAL_FLAG
+                            )
 
                         }
                         else -> throw IllegalStateException("Unexpected value: " + msg.what)
@@ -52,11 +70,11 @@ class CountDownView : LinearLayout {
         }
     }
 
-     fun setEndTimeMilliSecend(endTimeMilliSecend: Long) {
+    fun setEndTimeMilliSecend(endTimeMilliSecend: Long) {
         this.endTimeMilliSecend = endTimeMilliSecend
     }
 
-     fun startCountDownTime() {
+    fun startCountDownTime() {
         if (mHandler != null) {
             mHandler!!.sendEmptyMessageDelayed(SHOW_TIME_FLAG, SHOW_TIME_INTERVAL_FLAG)
         }
