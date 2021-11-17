@@ -39,4 +39,5 @@
     <string name="fan_low">1</string>
     <string name="fan_medium">2</string>
     <string name="fan_high">3</string>
+    <string name="commodity_data_service_provider" translatable="false"><![CDATA[COMMODITY DATA & SERVICE PROVIDER]]></string>
 </resources>
